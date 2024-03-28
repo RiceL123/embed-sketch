@@ -1,8 +1,11 @@
 {
-  "id": "obsidian-sample-plugin",
-  "name": "Sample Plugin",
-  "version": "0.0.1",
-  "description": "What the heck am I doing",
-  "author": "RiceL123",
-  "isDesktopOnly": false
+	"id": "draw-svg",
+	"name": "Draw SVG",
+	"version": "1.0.0",
+	"minAppVersion": "0.15.0",
+	"description": "Draw some svgs",
+	"author": "Obsidian",
+	"authorUrl": "https://obsidian.md",
+	"fundingUrl": "https://obsidian.md/pricing",
+	"isDesktopOnly": false
 }
