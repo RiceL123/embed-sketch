@@ -1,21 +1,22 @@
 import { App, Editor, MarkdownView, Modal, Notice, Plugin, PluginSettingTab, Setting, editorEditorField } from 'obsidian';
 
 // Remember to rename these classes and interfaces!
+import { EmbedSketchModal } from 'src/EmbedSketchModal';
 
-interface MyPluginSettings {
+export interface EmbedSketchSettings {
 	mySetting: string;
 	svg_height: string;
 	svg_width: string;
 }
 
-const DEFAULT_SETTINGS: MyPluginSettings = {
+const DEFAULT_SETTINGS: EmbedSketchSettings = {
 	mySetting: 'default',
 	svg_height: '100%',
 	svg_width: '100%'
 }
 
 export default class MyPlugin extends Plugin {
-	settings: MyPluginSettings;
+	settings: EmbedSketchSettings;
 	drawPath: SVGPathElement;
 	drawingArea: SVGSVGElement;
 	isDrawing: boolean;
@@ -33,7 +34,11 @@ export default class MyPlugin extends Plugin {
 			new SampleModal(this.app).open();
 		});
 
+		this.addRibbonIcon('pen-line', 'Sample Plugin', () => {
+			new Notice('your mother!');
 
+			new EmbedSketchModal(this.app, this.settings).open();
+		});
 
 		this.addCommand({
 			id: 'your-mother-command',
