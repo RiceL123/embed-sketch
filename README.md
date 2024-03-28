@@ -1,5 +1,4 @@
-# What the heck is going on?
+# Embed SVG
 
-Hello! I'm no too sure how to make plugins or use typescript - (let alone javascript 💀💀💀) However, I am just mucking around with this :)
+Embed SVG is a simple [obsidian](https://obsidian.md/) plugin that allows you to draw and embed svgs quickly to your current page without generating other files. Other drawing tools like Exaclidraw and TLDraw save to separate files which can be linked to however i don't like that.
 
-This plugin is made with the intention of being used in the [obsidian](https://obsidian.md/) application. (I love obsidian)
