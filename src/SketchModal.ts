@@ -16,7 +16,7 @@ export class SketchModal extends Modal {
     this.settings = settings;
     console.log("this.contentEl.getCssPropertyValue('--color-accent')" + this.contentEl.getCssPropertyValue("--color-accent"));
     this.brush = new Brush('2', "#ffffff")
-    this.modalEl.style.padding = "40px";
+    this.modalEl.style.paddingInline = "2em";
     this.modalEl.style.height = '100%';
     this.modalEl.style.width = '100%';
     this.titleEl.textContent = "Embed Sketch";
@@ -42,8 +42,12 @@ export class SketchModal extends Modal {
       this.tool.continueDraw(point.x, point.y);
     });
     this.canvas.addEventListener('touchend', (e) => {
-      let point = getSVGPoint_touch(e, this.canvas);
-      this.tool.endDraw(point.x, point.y);
+      // let point = getSVGPoint_touch(e, this.canvas);
+      this.tool.endDraw(NaN, NaN);
+    });
+    this.canvas.addEventListener('touchcancel', (e) => {
+      // let point = getSVGPoint_touch(e, this.canvas);
+      this.tool.endDraw(NaN, NaN);
     });
 
     function getSVGPoint_touch(event: TouchEvent, canvas: SVGSVGElement) {

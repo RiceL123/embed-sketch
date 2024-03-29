@@ -4,6 +4,7 @@ import { SketchModal } from "src/SketchModal";
 export const append_embed_button = (menu: HTMLElement, sketchModal: SketchModal) : void => {
   let button = menu.createEl("button");
   button.appendChild(getIcon('save'))
+  button.title = 'Embed SVG to current page';
   button.style.height = '4.2em';
   button.style.width = '4.2em';
 

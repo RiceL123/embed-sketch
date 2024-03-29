@@ -4,6 +4,7 @@ import { SketchModal } from "./SketchModal";
 export const append_copy = (menu: HTMLElement, sketchModal: SketchModal) : void => {
   let button = menu.createEl("button");
   button.appendChild(getIcon('clipboard-copy'));
+  button.title = 'Copy SVG to clipboard'
   button.style.height = '4.2em';
   button.style.width = '4.2em';
 
