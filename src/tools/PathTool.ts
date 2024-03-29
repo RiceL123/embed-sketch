@@ -8,12 +8,9 @@ export class PathTool implements Tool {
 
   constructor(modal: SketchModal) {
     this.modal = modal;
-    console.log(`modal canvas: ${modal.canvas}`)
-    console.log(this.modal)
   }
 
   startDraw(x: number, y: number): void {
-    console.log(`PathTool: x: ${x} y: ${y}`)
     this.is_drawing = true;
 
     this.path = this.modal.canvas.createSvg("path");
@@ -32,7 +29,6 @@ export class PathTool implements Tool {
     }
   }
   endDraw(x: number, y: number): void {
-    console.log(`PathTool: x: ${x} y: ${y}`)
     this.is_drawing = false;
   }
 

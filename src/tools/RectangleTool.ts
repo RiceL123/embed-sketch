@@ -13,10 +13,6 @@ export class RectangleTool implements Tool {
   }
 
   startDraw(x: number, y: number): void {
-    console.log(`modal: canvas: ${this.modal.canvas}`);
-    console.log(this.modal);
-
-    console.log(`RectangleTool: x: ${x} y: ${y}`)
     this.is_drawing = true;
 
     this.rectangle = this.modal.canvas.createSvg('rect');
@@ -34,7 +30,6 @@ export class RectangleTool implements Tool {
   }
 
   continueDraw(x: number, y: number): void {
-    console.log(`RectangleTool: x: ${x} y: ${y}`)
     if (this.is_drawing) {
       const width = x - this.startX;
       const height = y - this.startY;
@@ -46,7 +41,6 @@ export class RectangleTool implements Tool {
   }
 
   endDraw(x: number, y: number): void {
-    console.log(`RectangleTool: x: ${x} y: ${y}`)
     this.is_drawing = false;
   }
 }

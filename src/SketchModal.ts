@@ -1,21 +1,21 @@
 import { App, Editor, MarkdownView, Modal, Notice, Plugin, PluginSettingTab, Setting, editorEditorField } from 'obsidian';
 import { EmbedSketchSettings } from '../main';
-import { generateEmbedButton } from './EmbedButton'
 import { Tool } from './tools/Tool';
 import { PathTool } from './tools/PathTool';
-import { RectangleTool } from './tools/RectangleTool';
-import { Brush, append_color_selector, append_thickness_selector } from './Brush';
+import { Brush } from './Brush';
+import { append_menu } from './Menu';
 
 export class SketchModal extends Modal {
   private settings: EmbedSketchSettings;
-  private tool: Tool;
+  tool: Tool;
   canvas: SVGSVGElement;
   brush: Brush;
 
   constructor(app: App, settings: EmbedSketchSettings) {
     super(app)
     this.settings = settings;
-    this.brush = new Brush('2', '#e25050')
+    console.log("this.contentEl.getCssPropertyValue('--color-accent')" + this.contentEl.getCssPropertyValue("--color-accent"));
+    this.brush = new Brush('2', "#ffffff")
     this.modalEl.style.padding = "40px";
     this.modalEl.style.height = '100%';
     this.modalEl.style.width = '100%';
@@ -26,11 +26,7 @@ export class SketchModal extends Modal {
 	onOpen() {
 		const { contentEl } = this;
 
-    let menu = contentEl.createDiv("Menu");
-    menu.style.display = 'flex';
-    menu.style.alignItems = 'center';
-    menu.style.padding = '1em';
-    menu.style.gap = '0.6em';
+    append_menu(contentEl, this);
 
     this.canvas = contentEl.createSvg("svg");
     this.canvas.style.height = this.settings.svg_height;
@@ -76,24 +72,6 @@ export class SketchModal extends Modal {
       point.y = event.clientY;
       return point.matrixTransform(canvas.getScreenCTM()?.inverse());
     }
-
-    let save = menu.createEl("button");
-    generateEmbedButton(save, this.canvas, this);
-
-    let path = menu.createEl("button");
-    path.textContent = "path";
-    path.addEventListener("click", () => {
-      this.tool = new PathTool(this);
-    });
-
-    let rect = menu.createEl("button");
-    rect.textContent = "rectangle";
-    rect.addEventListener("click", () => {
-      this.tool = new RectangleTool(this);
-    });
-  
-    append_thickness_selector(menu, this.brush);
-    append_color_selector(menu, this.brush);
 	}
 
 	onClose() {
