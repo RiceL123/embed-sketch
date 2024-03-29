@@ -1,7 +1,7 @@
 import { App, Editor, MarkdownView, Modal, Notice, Plugin, PluginSettingTab, Setting, editorEditorField } from 'obsidian';
+import { SketchModal } from 'src/SketchModal';
 
 // Remember to rename these classes and interfaces!
-import { EmbedSketchModal } from 'src/EmbedSketchModal';
 
 export interface EmbedSketchSettings {
 	mySetting: string;
@@ -24,47 +24,20 @@ export default class MyPlugin extends Plugin {
 	async onload() {
 		await this.loadSettings();
 
-		this.app.workspace
-
-		this.app
-
-		this.addRibbonIcon('dice', 'Sample Plugin', () => {
-			new Notice('This is a adsad!');
-
-			new SampleModal(this.app).open();
-		});
-
-		this.addRibbonIcon('pen-line', 'Sample Plugin', () => {
-			new Notice('your mother!');
-
-			new EmbedSketchModal(this.app, this.settings).open();
+		this.addRibbonIcon("sunrise", 'Sketch Modal', () => {
+			new Notice('using SketchModal.ts');
+			new SketchModal(this.app, this.settings).open();
 		});
 
 		this.addCommand({
 			id: 'your-mother-command',
 			name: 'Your Mother Command',
 			editorCallback: (editor: Editor, view: MarkdownView) => {
-				// let a = view.contentEl.createDiv("something");
-				let a = createEl("div", { cls: "something" });
-
-				a.innerText = "INNER TEXT";
-				a.style.height = '100px';
-				a.style.width = '100px';
-				a.style.border = 'solid';
-
-				a.addEventListener("mousedown", () => console.log("clicked on something"));
-				a.addEventListener("click", () => console.log("clicked"));
-
-				console.log(view.contentEl);
-				view.contentEl.getElementsByClassName("cm-content")[0].appendChild(a);
-				editor.replaceSelection(a.outerHTML);
-				console.log(view.contentEl);
-
-				// let svg = createSvg("")
+				new SketchModal(this.app, this.settings).open();
 			}
 		});
 
-		this.addSettingTab(new SampleSettingTab(this.app, this));
+		this.addSettingTab(new EmbedSketchSettingsTab(this.app, this));
 	}
 
 	async loadSettings() {
@@ -75,72 +48,8 @@ export default class MyPlugin extends Plugin {
 		await this.saveData(this.settings);
 	}
 }
-class SampleModal extends Modal {
-	
 
-	constructor(app: App) {
-		super(app);
-	}
-
-	onOpen() {
-		let is_drawing: boolean;
-
-		const { contentEl } = this;
-		let button = contentEl.createEl('button');
-		let a = contentEl.createSvg("svg");
-		
-		button.textContent = 'save';
-		button.addEventListener('click', () => {
-			console.log(`saving ${a.outerHTML} to active file`);
-			a.style.border = 'none';
-			this.app.workspace.activeEditor?.editor?.replaceSelection(a.outerHTML);
-			this.close();
-		});
-
-		a.style.height = '500px';
-		a.style.width = '500px';
-		a.style.border = 'solid';
-		
-		let drawPath = a.createSvg("path");
-		drawPath.style.fill = 'none'
-		drawPath.style.stroke = 'black';
-		drawPath.style.strokeWidth ='2';
-
-		a.addEventListener("mousedown", (e) => {
-			console.log("hello");
-			is_drawing = true;
-			let point = getSVGPoint(e)
-			drawPath.setAttribute("d", "M" + point.x + " " + point.y);
-		});
-		a.addEventListener("mousemove", (e) => {
-			if (is_drawing) {
-				console.log(`mouse moved: x: ${e.x} y: ${e.y}`);
-				let point = getSVGPoint(e);
-				let previousPath = drawPath.getAttribute("d");
-				drawPath.setAttribute("d", previousPath + "L" + point.x + " " + point.y);
-			}
-		});
-		a.addEventListener("mouseup", () => {
-			console.log("mouseup");
-			is_drawing = false;
-		});
-
-		function getSVGPoint(event: MouseEvent) {
-			var point = a.createSVGPoint();
-			point.x = event.clientX;
-			point.y = event.clientY;
-			return point.matrixTransform(a.getScreenCTM().inverse());
-		}
-
-	}
-
-	onClose() {
-		const { contentEl } = this;
-		contentEl.empty();
-	}
-}
-
-class SampleSettingTab extends PluginSettingTab {
+class EmbedSketchSettingsTab extends PluginSettingTab {
 	plugin: MyPlugin;
 
 	constructor(app: App, plugin: MyPlugin) {
