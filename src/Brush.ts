@@ -1,5 +1,6 @@
 import { ButtonComponent } from "obsidian";
 import { SketchModal } from "./SketchModal";
+import { ContainerAppend } from "./Menu";
 
 export class Brush {
   thickness: string;
@@ -11,7 +12,7 @@ export class Brush {
   }
 }
 
-export const append_thickness_selector = (menu: HTMLElement, sketchModal: SketchModal): void => {
+export const append_thickness_selector : ContainerAppend = (menu: HTMLElement, sketchModal: SketchModal): void => {
   let thickness_container = menu.createDiv();
   thickness_container.style.display = 'flex';
   thickness_container.style.flexDirection = 'column';
@@ -29,7 +30,7 @@ export const append_thickness_selector = (menu: HTMLElement, sketchModal: Sketch
   }
 }
 
-export const append_color_selector = (menu: HTMLElement, sketchModal: SketchModal): void => {
+export const append_color_selector : ContainerAppend = (menu: HTMLElement, sketchModal: SketchModal): void => {
   let color_container = menu.createDiv();
   color_container.style.display = 'flex';
   color_container.style.alignItems = 'center';

@@ -1,7 +1,8 @@
 import { MarkdownView, Notice, getIcon } from "obsidian";
 import { SketchModal } from "src/SketchModal";
+import { ContainerAppend } from "./Menu";
 
-export const append_embed_button = (menu: HTMLElement, sketchModal: SketchModal) : void => {
+export const append_embed_button : ContainerAppend = (menu: HTMLElement, sketchModal: SketchModal) : void => {
   let button = menu.createEl("button");
   button.appendChild(getIcon('save'))
   button.title = 'Embed SVG to current page';

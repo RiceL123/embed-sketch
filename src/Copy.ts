@@ -1,7 +1,8 @@
 import { Notice, getIcon } from "obsidian";
 import { SketchModal } from "./SketchModal";
+import { ContainerAppend } from "./Menu";
 
-export const append_copy = (menu: HTMLElement, sketchModal: SketchModal) : void => {
+export const append_copy : ContainerAppend = (menu: HTMLElement, sketchModal: SketchModal) : void => {
   let button = menu.createEl("button");
   button.appendChild(getIcon('clipboard-copy'));
   button.title = 'Copy SVG to clipboard'

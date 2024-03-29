@@ -1,7 +1,10 @@
 import { SketchModal } from "src/SketchModal";
+import { getIcon } from "obsidian";
+import { ContainerAppend } from "src/Menu";
+
 import { PathTool } from "./PathTool";
 import { RectangleTool } from "./RectangleTool";
-import { getIcon } from "obsidian";
+import { EraserTool } from "./EraserTool";
 
 export interface Tool {
   modal: SketchModal; // for some reason becomes undefined
@@ -11,7 +14,7 @@ export interface Tool {
   endDraw(x: number, y:number): void;
 }
 
-export const append_tools_selector = (menu: HTMLElement, sketchModal: SketchModal): void => {
+export const append_tools_selector : ContainerAppend = (menu: HTMLElement, sketchModal: SketchModal): void => {
   let container = menu.createDiv();
   container.style.display = 'flex';
   container.style.flexDirection = 'column';
@@ -23,55 +26,21 @@ export const append_tools_selector = (menu: HTMLElement, sketchModal: SketchModa
   toolConatainer.style.gridTemplateColumns = 'repeat(3, 1fr)';
   toolConatainer.style.gap = '0.25em';
 
-  let path = toolConatainer.createEl("button");
-  path.title = 'Path Tool';
-  path.prepend(getIcon('pen-tool'));
-  // let pen_icon = getIcon('pen-tool');
+  let toolArray: Array<[string, string, Tool]> = [
+    ['Path Tool', 'pen-tool', new PathTool(sketchModal)],
+    ['Rectangle Tool', 'rectangle-horizontal', new RectangleTool(sketchModal)],
+    ['Ellipse Tool', 'circle', new PathTool(sketchModal)],
+    ['Eraser Tool', 'eraser', new EraserTool(sketchModal)],
+    ['Lasso Tool', 'lasso-select', new PathTool(sketchModal)],
+    ['Fill Tool', 'paint-bucket', new PathTool(sketchModal)],
+  ]
 
-  path.addEventListener("click", () => {
-    sketchModal.tool = new PathTool(sketchModal);
-  });
-
-  let rect = toolConatainer.createEl("button");
-  rect.title = 'Rectangle Tool';
-  rect.prepend(getIcon('rectangle-horizontal'));
-  rect.addEventListener("click", () => {
-    console.log("changing to rectangle")
-    sketchModal.tool = new RectangleTool(sketchModal);
-    console.log(sketchModal);
-  });
-
-  let circle = toolConatainer.createEl("button");
-  circle.title = 'Ellipse Tool';
-  circle.prepend(getIcon('circle'));
-
-  circle.addEventListener("click", () => {
-    sketchModal.tool = new RectangleTool(sketchModal);
-  });
-
-  let eraser = toolConatainer.createEl("button");
-  eraser.title = 'Eraser Tool';
-  eraser.prepend(getIcon('eraser'));
-
-  eraser.addEventListener("click", () => {
-    sketchModal.tool = new RectangleTool(sketchModal);
-  });
-
-  let lasso = toolConatainer.createEl("button");
-  lasso.title = 'Lasso Tool';
-  lasso.prepend(getIcon('lasso-select'));
-
-  lasso.addEventListener("click", () => {
-    sketchModal.tool = new RectangleTool(sketchModal);
-  });
-
-  let fill = toolConatainer.createEl("button");
-  fill.title = 'Fill Tool';
-  fill.prepend(getIcon('paint-bucket'));
-
-  fill.addEventListener("click", () => {
-    sketchModal.tool = new RectangleTool(sketchModal);
-  });
-
-  // container.createEl('div').textContent = 'Tools';
+  for (const [title, icon, tool] of toolArray) {
+    let button = toolConatainer.createEl('button');
+    button.title = title;
+    button.prepend(getIcon(icon));
+    button.addEventListener('click', () => {
+      sketchModal.tool = tool;
+    })
+  }
 }
